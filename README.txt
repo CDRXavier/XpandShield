@@ -13,8 +13,10 @@ My own library for the Arduino Due (that aim to semi-support Arduboy sketches) i
 ______
 Components
 
-Two rows of male, 2.54mm (or 0.1 inch) standard pins go to the left and right edges of the board. A additional row of male pins go to the center "expansion port".
-You need 39 pins (including ones for display hookup), and a additional 11/12 for the expansion connector.
+Two rows of male, 2.54mm (or 0.1 inch) standard pins/header go to the left and right edges of the board. A additional row of male pins go to the center "expansion port".
+For regular Arduino boards, you need 35 pins, a additional 7 for display, and a additional 11/12 for the expansion connector.
+For big Arduino boards, you need 51 pins, a additional 7 for the display, a additional 11/12 for the expansion connector, and a additional 36 pin for the Digital connector.
+You need 6 female pin/headers.
 
 Six two-lead buttons are required. The exact type of buttons used are up to you. You can get the cheap square ones and cut off two legs, or step up and go with the tactile buttons for a USB mice. Or anything in betweeen.
 Four multi-turn adjustable resistors are recommded. You can use fixed-valued resistors instead, connecting the middle (or the rightmost) pad and the leftmost pad.
