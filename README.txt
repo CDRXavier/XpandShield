@@ -2,7 +2,7 @@ XpandShield
 Expansion Shield with multiple I/O. Compatible with Arduboy.
 ______
 To Do
-Experiment with some 6V (widely unavailable) 12V(rarely available) and 16V(plentiul supply) PPTC modules and evaluate if they are adequate (e.g. their resistance might be too high/low)
+Experiment with some 6V (widely unavailable) 12V(rarely available) and 16V(plentiul supply) PPTC and evaluate if they are adequate (e.g. their resistance might be too high/low)
 
 My own library for the Arduino Due (that aim to semi-support Arduboy sketches) is in the workings (and will be uploaded here). However, note that the Arduino Due do not have EEPROM.
 
