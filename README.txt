@@ -93,3 +93,5 @@ Arduino Leonardo support unmodified Arduboy sketch binary (without bootloader), 
 Currently, Arduboy code will compile for Arduino Mega. However, compatiability had not been tested.
 
 Arduino Due and Arduino Zero lie at the place where they would have partial support (because they lack EEPROM), but the library is not there yet.
+
+The code will neither compile for Arduino Uno nor does it physically support the connectivity Arduboy requires. Cutting corners may be possible, but there will be no information on that. Proceed on your own.
