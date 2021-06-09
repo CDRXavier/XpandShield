@@ -75,7 +75,6 @@ To use with Leonardo (or use Due's Wire1, together with pull-up resistors), shor
 
 The v1_X version (5V wired LED) work 100% with Arduino Leonardo.
 
-
 "Partial compatiable" boards
 With Arduino UNO, you cannot use the display, the RGB LED and the beeper correctly (without modifications) because pin 13,12,11 are duplicates of the MOSI, MISO, and SCK found at the ICSP header. Furthermore, A0 and A1 is SCL and SDA, so function for up and down buttons are not guaranteed -- and is unuseable if you plan on using hardware IIC.
 
@@ -84,6 +83,8 @@ To use IIC with Arduino Mega, short the upper two of the "version select" pads.
 
 Arduino Zero also do not display any of the "imcompatiable-ness" of the Arduino UNO, however it had not been tested with.
 To use IIC with Arduino Zero, short the upper two of the "version select" pads.
+
+You can use v1_X (5V LED) boards on any 3v3 Arduino (Due, Zero, etc.), provided that you do not solder the LEDs.
 ______
 Code/sketch/program
 
