@@ -4,8 +4,6 @@ ______
 To Do
 Experiment with some 6V (widely unavailable) 12V(rarely available) and 16V(plentiul supply) PPTC and evaluate if they are adequate (e.g. their resistance might be too high/low)
 
-Update the board with more comments.
-
 My own library for the Arduino Due (that aim to semi-support Arduboy sketches) is in the workings (and will be uploaded here). However, note that the Arduino Due do not have EEPROM.
 
 
@@ -70,6 +68,8 @@ Note: When fabricating, it is up to you if you want to print the (white) "commen
 ______
 Assembly
 It is recommended that you solder the TP-4056 (if available) first, then the central "expansion connector", followed by the ICSP header, followed by buttons / resistors / LED / screenPins / beeper / switch / batteryConnector in any order. The outside pins go after you clipped away the extra leads of all of the other components because they "gets in the way".
+
+I recommend NOT including the "Cmts_User" layer during maufacturing. Some of the drawings may impede/impact soldering. It may also have extra expenses.
 ______
 ______
 All of the shield's information is contained above. For others, read below.
@@ -77,10 +77,12 @@ ______
 ______
 Compatiable Boards
 
-Currently, The v2_X version (3v3 wired LED and IIC "version select") of the shield works 100% with Arduino Leonardo and Arduino Due.
-To use with Leonardo (or use Due's Wire1, together with pull-up resistors), short the two upper "version select" holes. To use Due's Wire0 (the default one with pull-up resistors), short the lower two. Do NOT connect the upper one with the lower one. It causes undefined behavior.
+Currently, The "Project2" version of the shield works 100% with Arduino Leonardo and Arduino Due.
+To use with Leonardo (or use Due's Wire1, together with pull-up resistors), short the two upper "version select" holes. To use Due's Wire0 (the default one with pull-up resistors), short the lower two. Do NOT connect the upper one with the lower one. It causes undefined behavior (unless on Leonardo, where the lower pins are unavailable).
 
-The v1_X version (5V wired LED) work 100% with Arduino Leonardo.
+The "Project3" version have all the characteristics of the "Project2" boards, except that the TP4056 is now a surface mount module on its own.
+
+v_1 boards are discontinued. It serve no purpose since v_2_X boards are also compatiable with Arduino Leonardo.
 
 "Partial compatiable" boards
 With Arduino UNO, you cannot use the display, the RGB LED and the beeper correctly (without modifications) because pin 13,12,11 are duplicates of the MOSI, MISO, and SCK found at the ICSP header. Furthermore, A0 and A1 is SCL and SDA, so function for up and down buttons are not guaranteed -- and is unuseable if you plan on using hardware IIC.
