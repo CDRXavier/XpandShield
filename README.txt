@@ -82,7 +82,7 @@ To use with Leonardo (or use Due's Wire1, together with pull-up resistors), shor
 
 The "Project3" version have all the characteristics of the "Project2" boards, except that the TP4056 is now a surface mount module on its own.
 
-v_1 boards are discontinued. It serve no purpose since v_2_X boards are also compatiable with Arduino Leonardo.
+"Project1" boards are small versions of the "Project2" boards without the charging circuit.
 
 "Partial compatiable" boards
 With Arduino UNO, you cannot use the display, the RGB LED and the beeper correctly (without modifications) because pin 13,12,11 are duplicates of the MOSI, MISO, and SCK found at the ICSP header. Furthermore, A0 and A1 is SCL and SDA, so function for up and down buttons are not guaranteed -- and is unuseable if you plan on using hardware IIC.
