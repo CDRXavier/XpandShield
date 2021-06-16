@@ -6,19 +6,19 @@ Experiment with some 6V (widely unavailable) 12V(rarely available) and 16V(plent
 
 My own library for the Arduino Due (that aim to semi-support Arduboy sketches) is in the workings (and will be uploaded here). However, note that the Arduino Due do not have EEPROM.
 
-
-
 ______
 Components
 
-Two rows of male, 2.54mm (or 0.1 inch) standard pins/header go to the left and right edges of the board. A additional row of male pins go to the center "expansion port".
+Note: The components used in the shield is subjected to change as parts availability might render some components scarce.
+
+Two rows of male, 2.54mm (or 0.1 inch) standard pins/header go to the left and right edges of the board. A additional row of male pins go to the center "expansion port", which is optional.
 For regular Arduino boards, you need 35 pins, a additional 7 for display, and a additional 11/12 for the expansion connector.
 For big Arduino boards, you need 51 pins, a additional 7 for the display, a additional 11/12 for the expansion connector, and a additional 36 pin for the Digital connector.
-You need 6 female pin/headers.
+You need a 2x3 female pin/headers.
 
 Six two-lead buttons are required. The exact type of buttons used are up to you. You can get the cheap square ones and cut off two legs, or step up and go with the tactile buttons for a USB mice. Or anything in betweeen.
 Four multi-turn adjustable resistors are recommded. You can use fixed-valued resistors instead, connecting the middle (or the rightmost) pad and the leftmost pad.
-Two fixed-value resistors are required. One is for the two indicator LEDs (because they only light up one at a time), and is (to personal discretion) between 3K and 10K ohms. The other one is the current-limiting resistor, whose relationship is shown below:
+Two fixed-value resistors are required. One is for the two indicator LEDs (because they only light up one at a time), and is (to personal discretion) between 3K and 10K ohms. The other one is the current-limiting resistor for the TP-4056, whose relationship is shown below:
 
 Resistance | Current
   (kΩ)     |  (mA)
@@ -34,7 +34,10 @@ Resistance | Current
 
 I recommend one between 3K and 2K. Depend on the Arduino board used, the current limited by the onboard USB port fuse is 500mA (even if the USB port is able to supply more). Drawing more current will cause the voltage to drop rather quickly (before the fuse trips).
 
-Always pick the current that is equal (or less) than the capacity of the battery you are using. For example, if we are using a 400mAh battery, then we can charge it with no more than 400 mA (which, if it is rated correctly, full-charge it in exactly an hour). If you are using low quality or cheap batteries, I recommend 75% of the rated capacity.
+Always pick the current that is equal (or less) than the capacity of the battery you are using. For example, if we are using a 400mAh battery, then we can charge it with no more than 400 mA. If you are using low quality or cheap batteries, I recommend 75% of the value derived from the rated capacity.
+
+For MAX1811, pull the current select high for 500mA and low for 100mA.
+For LTC4056, "in constant current mode the typical charge current is 915 times the current through this resistor. Current is limited to approximately 1.4mA (charge current of approimately 1.4A)"
 
 Pick any beeper that fit. The openings for the leads fit 5.08mm (2 * 2.54mm) ones or 7.62mm (3 * 2.54mm) ones. Remember that the beeper must NOT be "continuous" or "with source" (i.e. beeps when fed power) but are instead "not sourced" (i.e. click once when fed power, click once when disconnected from power).
 
@@ -45,14 +48,14 @@ A good display of this type should have SEVEN pins. They are, from left to right
 You might run out of patience and grab whichever 0.96 inch one (of perhaps the worst color you can imagine), or you can spent a lot of time and eventually come around some nice 1.3 inch white ones with 7 pins like I did.
 
 Now, the switch.
-The switch is of DPDT (double pole double throw) type. Whether it is a sliding switch or a push-button switch, it's your preference. The pins are a 3*2 2.54mm grid.
+The switch is of DPDT (double pole double throw) type. Whether it is a sliding switch or a push-button switch, it's your preference. The pins are a 3*2@2.54mm grid.
 ...
 Okay. I just spent about 15 minutes looking for a place for the "DPDT sideways locking pushbutton" I got. And I couldn't find it.
 It's by Toneluck. And the reason I chose it is because ... well, let me tell you a story.
 Quite a few years ago I made my first toy that I am very happy about. It was a toy three-wheeler with a omnidirectional wheel and two trailing wheels. I looked at the pile of (unorganized) electronic parts (back at that time) and I found one of these. And I used it on the motor. The LED headlight received a cheap small switch. Despite the larger load, the small sliding switch had wore out (despite seeing few uses), while the pushbutton still works perfectly.
 So, this time, I go out and tried to look for that same switch I used on this three-wheeler. The one on my three-wheeler had no markings, but it look practically identical to this Toneluck one I found.
 (still looking for DPDT switches)
-Well, I do not want to use those square ones with the button sticking out from the top. Those ... I didn't have a good memory working with those.
+Well, I do not want to use those square ones with the button sticking out from the top. Those ... I didn't have a good experience working with those.
 You had a few (DPDT 2.54mm pitch) switches. I saw a few from C&K. NKK too. A few from TE Connectivity. Also a few Alps.
 
 Don't ask me about the LEDs. They are 3mm thru-hole. They are available literally everywhere. You need at least one of each of red, green, blue.
