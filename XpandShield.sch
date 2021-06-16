@@ -4,10 +4,10 @@ EELAYER END
 $Descr User 7000 7000
 encoding utf-8
 Sheet 1 1
-Title ""
+Title "XpandShield_v2"
 Date ""
-Rev ""
-Comp ""
+Rev "2_1"
+Comp "Xavier"
 Comment1 ""
 Comment2 ""
 Comment3 ""
