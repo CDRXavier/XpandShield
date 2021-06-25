@@ -2,7 +2,6 @@ XpandShield
 Expansion Shield with multiple I/O. Compatible with Arduboy.
 ______
 To Do
-Experiment with some 6V (widely unavailable) 12V(rarely available) and 16V(plentiul supply) PPTC and evaluate if they are adequate (e.g. their resistance might be too high/low)
 
 My own library for the Arduino Due (that aim to semi-support Arduboy sketches) is in the workings (and will be uploaded here). However, note that the Arduino Due do not have EEPROM.
 
@@ -55,55 +54,60 @@ It's by Toneluck. And the reason I chose it is because ... well, let me tell you
 Quite a few years ago I made my first toy that I am very happy about. It was a toy three-wheeler with a omnidirectional wheel and two trailing wheels. I looked at the pile of (unorganized) electronic parts (back at that time) and I found one of these. And I used it on the motor. The LED headlight received a cheap small switch. Despite the larger load, the small sliding switch had wore out (despite seeing few uses), while the pushbutton still works perfectly.
 So, this time, I go out and tried to look for that same switch I used on this three-wheeler. The one on my three-wheeler had no markings, but it look practically identical to this Toneluck one I found.
 (still looking for DPDT switches)
-Well, I do not want to use those square ones with the button sticking out from the top. Those ... I didn't have a good experience working with those.
+Well, I do not want to use those square ones with the button sticking out from the top. Those ... I didn't have a good memory working with those.
 You had a few (DPDT 2.54mm pitch) switches. I saw a few from C&K. NKK too. A few from TE Connectivity. Also a few Alps.
 
 Don't ask me about the LEDs. They are 3mm thru-hole. They are available literally everywhere. You need at least one of each of red, green, blue.
 
 The diode is a SR-240. A SR-220 should also work (but is not guaranteed since I didn't test it). They are also available at most places.
+
+Experiment with (both 6V and 16V) PPTC rated at 0.75A do not see tripping at current rated at 1A. The resistance is quite low, however.
+
+Optional: You can connect a capacitor between 5V and GND to smooth out any irregular flows, especially if there are some large-load devices attached at the expansion connector or if the battery connector gets loose. The minimum capacitance is 1uF.
 ______
 Fabricating the board
-To make changes to the board (to accomondate different part availability), you must have the KiCad software.
-Then you can either change the PCB to fit your liking (since everything is licenced under GPL v2.0 or later), or you can just fabricate it "as is", if you manage to get everything.
+To make changes to the board (to accomondate different parts availability), you must have the KiCad software.
+Then you can either change the PCB to fit your liking (since everything is licenced under GPL v2.0 or later), or you can just fabricate it "as is".
 To prepare files for fabrication, you need to select "Export" or "Fabrication Outputs" under "Files". Then choose the appropriate file format the company asks for.
 
 Note: When fabricating, it is up to you if you want to print the (white) "comment" markings onto the board or not. They serve as a guidance during assembly, but you can always refer to the PCB or the photos.
 ______
 Assembly
-It is recommended that you solder the TP-4056 (if available) first, then the central "expansion connector", followed by the ICSP header, followed by buttons / resistors / LED / screenPins / beeper / switch / batteryConnector in any order. The outside pins go after you clipped away the extra leads of all of the other components because they "gets in the way".
+It is recommended that you solder the TP4056/MAX1811 first, then the central "expansion connector", followed by the ICSP header, followed by buttons/resistors/LED/ screenPins/beeper/switch/batteryConnector/diode/capacitor in any order. The outside pins go after you clipped away the extra leads of all of the other components because they "gets in the way". The screen goes after the outside connectors.
 
-I recommend NOT including the "Cmts_User" layer during maufacturing. Some of the drawings may impede/impact soldering. It may also have extra expenses.
+I recommend NOT including the "Cmts_User" layer during maufacturing. Some of the drawings may impede/impact soldering, or are overlapped by other elements. It may also have extra expenses.
 ______
 ______
-All of the shield's information is contained above. For others, read below.
+All of the information about the shield itself is contained above. For others, read below.
 ______
 ______
 Compatiable Boards
 
-Currently, The "Project2" version of the shield works 100% with Arduino Leonardo and Arduino Due.
-To use with Leonardo (or use Due's Wire1, together with pull-up resistors), short the two upper "version select" holes. To use Due's Wire0 (the default one with pull-up resistors), short the lower two. Do NOT connect the upper one with the lower one. It causes undefined behavior (unless on Leonardo, where the lower pins are unavailable).
+Currently, all shields works 100% with Arduino Leonardo and Arduino Due.
+To use with Leonardo (or use Due's Wire1, together with external pull-up resistors), short the two upper "version select" holes. To use Due's Wire0 (the default one with pull-up resistors), short the lower two. Do NOT connect the upper one with the lower one -- it causes undefined behavior (unless on Leonardo, where the lower pins are unavailable).
 
-The "Project3" version have all the characteristics of the "Project2" boards, except that the TP4056 is now a surface mount module on its own.
+The "version 3" version have all the characteristics of the "version 2" boards, except that the TP4056/MAX1811 is now a surface mount module on its own.
 
-"Project1" boards are small versions of the "Project2" boards without the charging circuit.
+"version 1" boards are small versions of the "version3" boards without the charging circuit. If use with Due, external pull-up resistors is required on Wire1 pins.
 
 "Partial compatiable" boards
-With Arduino UNO, you cannot use the display, the RGB LED and the beeper correctly (without modifications) because pin 13,12,11 are duplicates of the MOSI, MISO, and SCK found at the ICSP header. Furthermore, A0 and A1 is SCL and SDA, so function for up and down buttons are not guaranteed -- and is unuseable if you plan on using hardware IIC.
-
-Arduino Mega do not display any of the "incompatiable-ness" of the Arduino UNO, despite using similar MCUs. However it had not been tested with.
+Arduino Mega -- it had not been tested with.
 To use IIC with Arduino Mega, short the upper two of the "version select" pads.
 
-Arduino Zero also do not display any of the "imcompatiable-ness" of the Arduino UNO, however it had not been tested with.
+Arduino Zero -- it had not been tested with.
 To use IIC with Arduino Zero, short the upper two of the "version select" pads.
 
-You can use v1_X (5V LED) boards on any 3v3 Arduino (Due, Zero, etc.), provided that you do not solder the LEDs.
+Uncompatiable Boards
+
+Arduino UNO
+You cannot use the display, the RGB LED and the beeper correctly (without modifications) because pin 13,12,11 are duplicates of the MOSI, MISO, and SCK found at the ICSP header. Furthermore, A0 and A1 is SCL and SDA, so function for up and down buttons are not guaranteed -- and is unuseable if you plan on using hardware IIC.
 ______
 Code/sketch/program
 
-Arduino Leonardo support unmodified Arduboy sketch binary (without bootloader), as well as full support of Arduboy, Arduboy2, and Arduboy Homemade libraries. All of the code posted in relative projects works as well -- provided that the parts adhere to the requirements.
+Arduino Leonardo support unmodified Arduboy sketch binary (without bootloader), as well as full support of Arduboy, Arduboy2, and Arduboy Homemade libraries. All of the code posted in relative projects works as well -- provided that all the parts adhere to the requirements.
 
 Currently, Arduboy code will compile for Arduino Mega. However, compatiability had not been tested.
 
-Arduino Due and Arduino Zero lie at the place where they would have partial support (because they lack EEPROM), but the library is not there yet.
+Arduino Due and Arduino Zero lie at the place where they would have partial support (because they lack EEPROM), but otherwise have more than the hardware capabilities of the Leonardo.
 
-The code will neither compile for Arduino Uno nor does it physically support the connectivity Arduboy requires. Cutting corners may be possible, but there will be no information on that. Proceed on your own.
+The code will neither compile for Arduino Uno nor does it physically support the connectivity Arduboy requires. Cutting corners may be possible, but there will be no support on that. Proceed on your own.
