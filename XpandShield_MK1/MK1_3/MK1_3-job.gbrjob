@@ -38,17 +38,17 @@
   "FilesAttributes":
   [
     {
-      "Path":  "project3-F_Cu.gbr",
+      "Path":  "MK1_3-F_Cu.gbr",
       "FileFunction":  "Copper,L1,Top",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "project3-B_Cu.gbr",
+      "Path":  "MK1_3-B_Cu.gbr",
       "FileFunction":  "Copper,L2,Bot",
       "FilePolarity":  "Positive"
     },
     {
-      "Path":  "project3-Edge_Cuts.gbr",
+      "Path":  "MK1_3-Edge_Cuts.gbr",
       "FileFunction":  "Profile",
       "FilePolarity":  "Positive"
     }
