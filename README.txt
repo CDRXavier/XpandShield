@@ -21,7 +21,7 @@ Four multi-turn adjustable resistors are recommded. You can use fixed-valued res
 Two fixed-value resistors are required. One is for the two indicator LEDs (because they only light up one at a time), and is (to personal discretion) between 3K and 10K ohms. The other one is the current-limiting resistor for the TP-4056, whose relationship is shown below:
 
 Resistance | Current
-  (kΩ)     |  (mA)
+ (kohm)    |   (mA)
    10      |   130
    5       |   250
    4       |   300
