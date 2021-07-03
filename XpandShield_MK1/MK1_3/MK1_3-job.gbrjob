@@ -7,14 +7,14 @@
       "Application": "Pcbnew",
       "Version":     "(5.1.9)-1"
     },
-    "CreationDate":  "2021-06-09T21:17:05-04:00"
+    "CreationDate":  "2021-07-03T12:47:21-04:00"
   },
   "GeneralSpecs":
   {
     "ProjectId":
     {
-      "Name": "project3",
-      "GUID": "70726f6a-6563-4743-932e-6b696361645f",
+      "Name": "MK1_3",
+      "GUID": "4d4b315f-332e-46b6-9963-61645f706362",
       "Revision": "rev?"
     },
     "Size":
