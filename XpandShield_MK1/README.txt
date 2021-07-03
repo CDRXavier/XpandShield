@@ -54,7 +54,12 @@ I did NOT include battery protection ICs because the only ones I find are TSSOPs
 
 Optional: You can connect a capacitor between 5V and GND to smooth out voltage, especially if there are some large-load devices attached at the expansion connector or if the battery connector gets loose. The minimum capacitance is 1uF.
 ______
-Fabricating the board
+The Board Files
+
+This folder houses the XpandShield (main) project, including the schemantics. Download this folder, then open this project file.
+In the project navigator, you can select the two sub-projects (that actually contain the board and the layers).
+You can also skip ahead and open the sub-projects directly.
+
 To make changes to the board (to accomondate different parts availability), you must have the KiCad software.
 Then you can either change the PCB to fit your liking, or you can just fabricate it "as is".
 To prepare files for fabrication, you need to select "Export" or "Fabrication Outputs" under "Files". Then choose the appropriate file format the company asks for.
