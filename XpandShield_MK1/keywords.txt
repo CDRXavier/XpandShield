@@ -1,0 +1,75 @@
+#######################################
+# Syntax Coloring Map For Arduboy
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+XpandShield	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+
+PInit	KEYWORD2
+LCDBoot	KEYWORD2
+setRGBled 	KEYWORD2
+LEDInit	KEYWORD2
+display	KEYWORD2
+pollButtons KEYWORD2
+clearDisplay	KEYWORD2
+drawPixel	KEYWORD2
+
+setFrameDiff	KEYWORD2
+nextFrame	KEYWORD2
+
+drawBitmap	KEYWORD2
+
+Startup	KEYWORD2
+
+drawHLine	KEYWORD2
+drawVLine	KEYWORD2
+drawLine	KEYWORD2
+
+drawRect	KEYWORD2
+fillRect	KEYWORD2
+drawCircle	KEYWORD2
+
+justPressed	KEYWORD2
+pressed	KEYWORD2
+
+perXFrame	KEYWORD2
+
+write	KEYWORD2
+print	KEYWORD2
+printNum	KEYWORD2
+printFlt	KEYWORD2
+setCursor	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BLACK	LITERAL1
+WHITE	LITERAL1
+INVERSE	LITERAL1
+
+UP_BUTTON	LITERAL1
+DOWN_BUTTON	LITERAL1
+LEFT_BUTTON	LITERAL1
+RIGHT_BUTTON	LITERAL1
+A_BUTTON	LITERAL1
+B_BUTTON	LITERAL1
+
+RED_LED	LITERAL1
+GREEN_LED	LITERAL1
+BLUE_LED	LITERAL1
+WIDTH	LITERAL1
+HEIGHT	LITERAL1
+
+OLED_DC	LITERAL1
+OLED_CS	LITERAL1
+OLED_RESET	LITERAL1
