@@ -1,6 +1,6 @@
 #include <SPI.h>
 #include <Wire.h>
-#include "XpandShield.h"
+#include <XpandShield.h>
 
 uint8_t CalcCrc(uint8_t data_a, uint8_t data_b)
 {
@@ -60,7 +60,7 @@ Sensor activeSensor;
 
 void setup() {
 
-XpandShield::Startup();
+  XpandShield::Startup();
   XpandShield::setFrameDiff(100);
   
   activeSensor = Sensor::SHT3X;
