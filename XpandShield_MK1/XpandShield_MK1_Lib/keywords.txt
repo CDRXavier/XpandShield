@@ -1,9 +1,9 @@
 #######################################
-# Syntax Coloring Map For Arduboy
+# Syntax Coloring Map For XpandShield
 #######################################
 
 #######################################
-# Datatypes (KEYWORD1)
+# Class (KEYWORD1)
 #######################################
 
 XpandShield	KEYWORD1
