@@ -95,6 +95,9 @@ Code/sketch/program
 
 With Arduino Leonardo, it support unmodified Arduboy binary, as well as full support of Arduboy, Arduboy2, and Arduboy Homemade libraries. All of the code posted in relative projects works as well -- provided that all the parts adhere to the requirements.
 
+The library for the XpandShield is here! To use the library, you need to move the XpandShield_Lib folder into the "libraries" folder in your personal Arduino folder.
+The library will also be added to the Arduino library manager (as soon as the process is complete).
+
 Currently, Arduboy code will compile for Arduino Mega. However, compatiability had not been tested.
 
 Arduino Due and Arduino Zero lie at the place where they would have partial support (because they lack EEPROM), but otherwise have more than the hardware capabilities of the Leonardo.
