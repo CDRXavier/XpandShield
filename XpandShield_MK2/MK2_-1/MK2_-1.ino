@@ -1,5 +1,5 @@
 #include <SPI.h>
-SPISettings spiSettings = SPISettings(8000UL, MSBFIRST, SPI_MODE3);
+SPISettings spiSettings = SPISettings(8000UL, MSBFIRST, SPI_MODE0);
 uint8_t input;
 void setup() {
   if (!Serial) delay(1);
