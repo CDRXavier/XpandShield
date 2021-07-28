@@ -1,11 +1,14 @@
-#include <SPI.h>
-SPISettings spiSettings = SPISettings(8000UL, MSBFIRST, SPI_MODE0);
+//#include <SPI.h>
+//SPISettings spiSettings = SPISettings(800000UL, MSBFIRST, SPI_MODE2);
 uint8_t input;
 void setup() {
   if (!Serial) delay(1);
   Serial.begin(9600);
   // put your setup code here, to run once:
-  pinMode(13, OUTPUT);
+  pinMode(A0, OUTPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, OUTPUT);
+  
   pinMode(12, OUTPUT);
   pinMode(11, OUTPUT);
   pinMode(10, OUTPUT);
@@ -19,17 +22,17 @@ void setup() {
 
 
   digitalWrite(12, HIGH);
-  digitalWrite(11, HIGH);
-  digitalWrite(10, HIGH);
-  digitalWrite(9, HIGH);
+  digitalWrite(11, LOW);
+  digitalWrite(10, LOW);
+  digitalWrite(9, LOW);
   digitalWrite(8, HIGH);
-  digitalWrite(7, HIGH);
+  digitalWrite(7, LOW);
   digitalWrite(6, HIGH);
-  digitalWrite(5, HIGH);
+  digitalWrite(5, LOW);
   
-  SPI.begin();
+//  SPI.begin();
   //async parallel load
-  digitalWrite(13, LOW);
+  digitalWrite(A0, LOW);
   //clock enable (active low)
   digitalWrite(4, HIGH);
 }
@@ -37,22 +40,34 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   
-    digitalWrite(13, HIGH);
-    
-    SPI.beginTransaction(spiSettings);
+    digitalWrite(A0, HIGH);
+    delay(10);
     digitalWrite(4, LOW);
-    input = SPI.transfer(0x23);
+    delay(1);
+    //SPI.beginTransaction(spiSettings);
+    //digitalWrite(A2, HIGH);
+    //input = SPI.transfer(0x00);
     //delay(900);
-    digitalWrite(4, HIGH);
-    SPI.endTransaction();
-    
-    digitalWrite(13, LOW);
-    //input = 0xFF;
-//Serial.print(input);
-    if ((input & 0b00000001) == 0b00000001)
-      Serial.print('H');
+for (uint8_t i = 0; i < 8; i++){
+  digitalWrite(A2, LOW);
+
+if (digitalRead(A1)==HIGH)
+Serial.print('H');
     else
       Serial.print('L');
+      digitalWrite(A2, HIGH);
+}
+//digitalWrite(A2, LOW);
+    //SPI.endTransaction();
+    delay(1);
+    digitalWrite(4, HIGH);
+    digitalWrite(A0, LOW);
+    //input = 0x34;
+//Serial.print(input);
+
+/*
+    if ((input & 0b00000001) == 0b00000001)
+      
       //Serial.print(input);
     if ((input & 0b00000010)==0b00000010)
       Serial.print('H');
@@ -84,6 +99,7 @@ void loop() {
       Serial.print('L');
 
     //Serial.print(input);
+    */
     Serial.print('\n');
     
     //delay(10);
