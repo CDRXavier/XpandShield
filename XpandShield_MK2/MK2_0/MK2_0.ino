@@ -30,7 +30,6 @@ void setup() {
   digitalWrite(6, HIGH);
   digitalWrite(5, LOW);
   //SPI.begin();
-  SPI.begin();
   //async parallel load
   digitalWrite(A0, LOW);
   //clock enable (active low)
