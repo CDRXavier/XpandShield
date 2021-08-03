@@ -1,0 +1,204 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 4500 1150 0    50   BiDi ~ 0
+A1
+Text GLabel 3800 1850 0    50   BiDi ~ 0
+A2
+Text GLabel 3850 1150 0    50   BiDi ~ 0
+A0
+Text GLabel 4500 1850 0    50   BiDi ~ 0
+A3
+Text GLabel 3750 2450 0    50   BiDi ~ 0
+A4
+Text GLabel 4500 2450 0    50   BiDi ~ 0
+A5
+$Comp
+L power:+5V #PWR0101
+U 1 1 610888B0
+P 3350 2850
+F 0 "#PWR0101" H 3350 2700 50  0001 C CNN
+F 1 "+5V" H 3365 2978 50  0000 L CNN
+F 2 "" H 3350 2850 50  0001 C CNN
+F 3 "" H 3350 2850 50  0001 C CNN
+	1    3350 2850
+	-1   0    0    1   
+$EndComp
+Text Label 4100 2550 0    50   ~ 0
+5V
+Text Label 3750 1650 0    50   ~ 0
+GND
+$Comp
+L Device:R_POT_US P1
+U 1 1 6108B65B
+P 3700 1500
+F 0 "P1" H 3633 1546 50  0000 R CNN
+F 1 "R_POT_US" H 3633 1455 50  0000 R CNN
+F 2 "" H 3700 1500 50  0001 C CNN
+F 3 "~" H 3700 1500 50  0001 C CNN
+	1    3700 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_US P0
+U 1 1 6108BA34
+P 4350 1500
+F 0 "P0" H 4283 1546 50  0000 R CNN
+F 1 "R_POT_US" H 4283 1455 50  0000 R CNN
+F 2 "" H 4350 1500 50  0001 C CNN
+F 3 "~" H 4350 1500 50  0001 C CNN
+	1    4350 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_US P3
+U 1 1 6108C1C1
+P 4350 2150
+F 0 "P3" H 4283 2196 50  0000 R CNN
+F 1 "R_POT_US" H 4283 2105 50  0000 R CNN
+F 2 "" H 4350 2150 50  0001 C CNN
+F 3 "~" H 4350 2150 50  0001 C CNN
+	1    4350 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_US P2
+U 1 1 6108C3EB
+P 3650 2150
+F 0 "P2" H 3583 2196 50  0000 R CNN
+F 1 "R_POT_US" H 3583 2105 50  0000 R CNN
+F 2 "" H 3650 2150 50  0001 C CNN
+F 3 "~" H 3650 2150 50  0001 C CNN
+	1    3650 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_US P4
+U 1 1 6108C692
+P 3600 2700
+F 0 "P4" H 3533 2746 50  0000 R CNN
+F 1 "R_POT_US" H 3533 2655 50  0000 R CNN
+F 2 "" H 3600 2700 50  0001 C CNN
+F 3 "~" H 3600 2700 50  0001 C CNN
+	1    3600 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT_US P5
+U 1 1 6108C98B
+P 4350 2700
+F 0 "P5" H 4283 2746 50  0000 R CNN
+F 1 "R_POT_US" H 4283 2655 50  0000 R CNN
+F 2 "" H 4350 2700 50  0001 C CNN
+F 3 "~" H 4350 2700 50  0001 C CNN
+	1    4350 2700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 1350 4350 1350
+Wire Wire Line
+	4350 1650 3700 1650
+Wire Wire Line
+	3650 2000 4350 2000
+Wire Wire Line
+	4350 2300 3650 2300
+Wire Wire Line
+	3600 2550 4350 2550
+Wire Wire Line
+	4350 2850 3600 2850
+Wire Wire Line
+	3750 2700 3750 2500
+Wire Wire Line
+	4500 2450 4500 2500
+Wire Wire Line
+	4500 2150 4500 1950
+Wire Wire Line
+	3800 1850 3800 1950
+Wire Wire Line
+	3850 1150 3850 1300
+Wire Wire Line
+	4500 1500 4500 1300
+Wire Wire Line
+	3350 1350 3350 2000
+Wire Wire Line
+	3350 2000 3650 2000
+Connection ~ 3700 1350
+Connection ~ 3650 2000
+Wire Wire Line
+	3600 2550 3350 2550
+Wire Wire Line
+	3350 2550 3350 2000
+Connection ~ 3600 2550
+Connection ~ 3350 2000
+Wire Wire Line
+	3650 2300 3200 2300
+Wire Wire Line
+	3200 2300 3200 2850
+Wire Wire Line
+	3200 2850 3350 2850
+Connection ~ 3650 2300
+Connection ~ 3600 2850
+Wire Wire Line
+	3700 1650 3250 1650
+Wire Wire Line
+	3200 1650 3200 2300
+Connection ~ 3700 1650
+Connection ~ 3200 2300
+Wire Wire Line
+	3250 1650 3250 1500
+Wire Wire Line
+	3250 1500 3150 1500
+Connection ~ 3250 1650
+Wire Wire Line
+	3250 1650 3200 1650
+Wire Wire Line
+	3700 1350 3350 1350
+Wire Wire Line
+	3150 1300 3350 1300
+Wire Wire Line
+	3350 1300 3350 1350
+Connection ~ 3350 1350
+Text GLabel 3150 1500 0    50   BiDi ~ 0
+5V
+Text GLabel 3150 1300 0    50   BiDi ~ 0
+GND
+Wire Wire Line
+	4500 1300 3850 1300
+Connection ~ 4500 1300
+Wire Wire Line
+	4500 1300 4500 1150
+Connection ~ 3850 1300
+Wire Wire Line
+	3850 1300 3850 1500
+Wire Wire Line
+	3800 1950 4500 1950
+Connection ~ 3800 1950
+Wire Wire Line
+	3800 1950 3800 2150
+Connection ~ 4500 1950
+Wire Wire Line
+	4500 1950 4500 1850
+Wire Wire Line
+	4500 2500 3750 2500
+Connection ~ 4500 2500
+Wire Wire Line
+	4500 2500 4500 2700
+Connection ~ 3750 2500
+Wire Wire Line
+	3750 2500 3750 2450
+Connection ~ 3350 2850
+Wire Wire Line
+	3350 2850 3600 2850
+$EndSCHEMATC
