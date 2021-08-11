@@ -1,15 +1,16 @@
 XpandShield
 Expansion Shield with multiple I/O for Arduino boards. Arduboy-compatiable pins.
 
-MK1_2 is the shield shown in the pictures (on Hackster and elsewhere). MK1_3 is a MK1_2, except that the TP4056 is now a surface mount module (instead of a breakout), along with a few other components.
+
+
+MK1_2 is the shield shown in the pictures (on Hackster and elsewhere). MK1_3 is a MK1_2, except that the TP4056 module is now a surface mount MAX1811 (instead of a breakout), along with a few other components.
 Mk1_2 is a small shield with no battery circuit and no expansion area.
 MK1_1_2 is a large shield with no battery circuit but a expanded expansion area.
 
 ______
 To Do
 
-Update the PCB to use Max1811.
-
+None! :)
 ______
 Components
 
