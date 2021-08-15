@@ -13,11 +13,11 @@ Write up everything
 Features:
 Two analog stick (with center push)
 DPad (currently using 4 independent pushbuttons)
-6-buttons (abcxyz) + 4 shoulder
+6-buttons (abcxyz) + 4 shoulder (L1R1L2R2)
 1.3 inch (or 0.96 inch) SSD1306 OLED
-two Linear potentialmeters
+two linear potentialmeters
 menu, start, select button
-stick-type switch
+stick-type switch (8 direction + center push)
 
 
 "Upcoming" features
@@ -31,7 +31,14 @@ Proto area (for your wireless modules)?
 Battery circuit & connector(?)
 
 Vibrating motor (?)
+
+
+Note:
+MK2_0 and MK2_-1 are preserved for historical reasons.
+
+Inside the RN-42 folder are firmwares for the RN-42 module, supposedly needed to be flashed onto HC-05 or other compatiable Bluetooth boards with the BC352 processor.
+
 ______
 
 
-Utilizing three 74HC165D parallel-load shift registers connected to SPI bus in daisy chain along with a tri-state buffer allow for ultra-fast read of the button state (SPI bus operate at 8MHz).
+Utilizing three 74HC165D parallel-load shift registers connected to SPI bus in daisy chain along with a tri-state buffer allow for fast reads of the button state, while the six analog channels provide 10 bit analog read for the six sticks.
