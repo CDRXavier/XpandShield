@@ -1,0 +1,91 @@
+#######################################
+# Syntax Coloring Map For XpandShield
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+XpandShield2	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+
+PInit		KEYWORD2
+LCDBoot		KEYWORD2
+display		KEYWORD2
+pollButtons 	KEYWORD2
+clearDisplay	KEYWORD2
+drawPixel	KEYWORD2
+
+setFrameDiff	KEYWORD2
+nextFrame	KEYWORD2
+
+drawBitmap	KEYWORD2
+
+Startup		KEYWORD2
+
+drawHLine	KEYWORD2
+drawVLine	KEYWORD2
+drawLine	KEYWORD2
+
+drawRect	KEYWORD2
+fillRect	KEYWORD2
+drawCircle	KEYWORD2
+
+justPressed	KEYWORD2
+pressed		KEYWORD2
+
+perXFrame	KEYWORD2
+
+write		KEYWORD2
+print		KEYWORD2
+printNum	KEYWORD2
+printFlt	KEYWORD2
+setCursor	KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+BLACK	LITERAL1
+WHITE	LITERAL1
+INVERSE	LITERAL1
+
+UP_BUTTON	LITERAL1
+DOWN_BUTTON	LITERAL1
+LEFT_BUTTON	LITERAL1
+RIGHT_BUTTON	LITERAL1
+A_BUTTON	LITERAL1
+B_BUTTON	LITERAL1
+C_BUTTON	LITERAL1
+X_BUTTON	LITERAL1
+Y_BUTTON	LITERAL1
+Z_BUTTON	LITERAL1
+START_BUTTON	LITERAL1
+SELECT_BUTTON	LITERAL1
+MENU_BUTTON	LITERAL1
+L1_BUTTON	LITERAL1
+R1_BUTTON	LITERAL1
+L2_BUTTON	LITERAL1
+R2_BUTTON	LITERAL1
+STK_U_BUTTON	LITERAL1
+STK_D_BUTTON	LITERAL1
+STK_L_BUTTON	LITERAL1
+STK_R_BUTTON	LITERAL1
+STK_S_BUTTON	LITERAL1
+C1_BUTTON	LITERAL1
+C2_BUTTON	LITERAL1
+
+WIDTH	LITERAL1
+HEIGHT	LITERAL1
+
+OLED_DC		LITERAL1
+OLED_CS		LITERAL1
+OLED_RESET	LITERAL1
+
+BUTN_CE	LITERAL1
+BUTN_PL	LITERAL1
