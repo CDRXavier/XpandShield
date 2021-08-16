@@ -104,10 +104,13 @@ You cannot use the display, the RGB LED and the beeper correctly (without modifi
 ______
 Code/sketch/program
 
-With Arduino Leonardo, it support unmodified Arduboy binary, as well as full support of Arduboy, Arduboy2, and Arduboy Homemade libraries. All of the code posted in relative projects works as well -- provided that all the parts adhere to the requirements.
-
 The library for the XpandShield is here! To use the library, you need to move the XpandShield_Lib folder into the "libraries" folder in your personal Arduino folder.
 The library will also be added to the Arduino library manager (as soon as the process is complete).
+
+Example sketches are in the "Sketches" folder. The "_OLD" version is preserved for historical reasons.
+
+With Arduino Leonardo, it support unmodified Arduboy binary, as well as full support of Arduboy, Arduboy2, and Arduboy Homemade libraries. All of the code posted in relative projects works as well -- provided that all the parts adhere to the requirements.
+
 
 Currently, Arduboy code will compile for Arduino Mega. However, compatiability had not been tested.
 
