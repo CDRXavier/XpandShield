@@ -48,9 +48,14 @@ Assembly
 Surface mounted modules first. Specifically the 0306 resistors because they are so small, you can easily break the board by heating for too long. Then the buttons, joystick, and the other stuff.
 
 ______
+Compatiability
+
+The board only supports Micro. However, because the pins for the display is wired up, a arduboy sketch will have no trouble driving the display. Even the direction buttons are somewhat solved as the analog sticks are able to provide the necessary voltage levels for the system to register a logic low. However all the buttons are wired to the shift registers and special code is needed to pull them out from those.
+______
+Library
 There is a library for XpandShield MK2. To use it, "download the MK2_Lib folder and put it into the Arduino's library folder.
 
-There are example sketches. They are under the Sketches folder.
+There are example sketches. And there will be more example sketches. They are under the Sketches folder.
 ___
 "Upcoming" features
 
