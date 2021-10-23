@@ -22,7 +22,7 @@
 //  driver will be always "Arduino LLC" as well as some others.
 
 #include <XpandShield2.h>
-#include <Mouse.h>
+#include "XMouse.h"
 
 
 
@@ -60,9 +60,12 @@ bool repeat;
 bool repeatL;
 bool repeatR;
 
+
 bool scramble;
 int8_t moveFrame;
 bool stallFrame;
+
+XMouse mouse;
 
 void fillCircle
 (int16_t x0, int16_t y0, uint8_t r, uint8_t color)
@@ -110,7 +113,7 @@ void setup() {
 
 
 
-  
+
   dirX = 0;
   dirY = 0;
   repeat = false;
@@ -120,19 +123,19 @@ void setup() {
   moveFrame = 0;
   stallFrame = false;
 
-sti0_mid = analogRead(A0);
-    sti1_mid = analogRead(A1);
-    sti2_mid = analogRead(A2);
-    sti3_mid = analogRead(A3);
+  sti0_mid = analogRead(A0);
+  sti1_mid = analogRead(A1);
+  sti2_mid = analogRead(A2);
+  sti3_mid = analogRead(A3);
 
-sti0_min = sti0_mid;
-sti0_max = sti0_mid;
-sti1_min = sti1_mid;
-sti1_max = sti1_mid;
-sti2_min = sti2_mid;
-sti2_max = sti2_mid;
-sti3_min = sti3_mid;
-sti3_max = sti3_mid;
+  sti0_min = sti0_mid;
+  sti0_max = sti0_mid;
+  sti1_min = sti1_mid;
+  sti1_max = sti1_mid;
+  sti2_min = sti2_mid;
+  sti2_max = sti2_mid;
+  sti3_min = sti3_mid;
+  sti3_max = sti3_mid;
 }
 
 
@@ -146,24 +149,24 @@ void loop() {
     sti3 = analogRead(A3);
     sti4 = analogRead(A4);
     sti5 = analogRead(A5);
-    
-if (sti0 < sti0_min)
-sti0_min = sti0;
-if (sti1 < sti1_min)
-sti1_min = sti1;
-if (sti2 < sti2_min)
-sti2_min = sti2;
-if (sti3 < sti3_min)
-sti3_min = sti3;
 
-if (sti0 > sti0_max)
-sti0_max = sti0;
-if (sti1 > sti1_max)
-sti1_max = sti1;
-if (sti2 > sti2_max)
-sti2_max = sti2;
-if (sti3 > sti3_max)
-sti3_max = sti3;
+    if (sti0 < sti0_min)
+      sti0_min = sti0;
+    if (sti1 < sti1_min)
+      sti1_min = sti1;
+    if (sti2 < sti2_min)
+      sti2_min = sti2;
+    if (sti3 < sti3_min)
+      sti3_min = sti3;
+
+    if (sti0 > sti0_max)
+      sti0_max = sti0;
+    if (sti1 > sti1_max)
+      sti1_max = sti1;
+    if (sti2 > sti2_max)
+      sti2_max = sti2;
+    if (sti3 > sti3_max)
+      sti3_max = sti3;
 
     XpandShield2::pollButtons();
 
@@ -203,7 +206,14 @@ sti3_max = sti3;
       XpandShield2::drawRect(31, 50, 5, 3, XpandShield2::WHITE);
       dirX = dirX + 1;
     }
-
+    if (dirX > 0)
+      mouse.scroll(0, -1);
+    if (dirX < 0)
+      mouse.scroll(0, 1);
+    if (dirY > 0)
+      mouse.scroll(-1, 0);
+    if (dirY < 0)
+      mouse.scroll(1, 0);
     XpandShield2::drawCircle(61, 43, 2, XpandShield2::WHITE);
     XpandShield2::drawCircle(69, 43, 2, XpandShield2::WHITE);
     XpandShield2::drawCircle(77, 43, 2, XpandShield2::WHITE);
@@ -214,14 +224,25 @@ sti3_max = sti3;
 
     if (XpandShield2::pressed(XpandShield2::A_BUTTON)) {
       fillCircle(61, 43, 2, XpandShield2::WHITE);
-      Mouse.move(0, 0, 1);
+      mouse.press(MOUSE_LEFT);
     }
+    else
+      mouse.release(MOUSE_LEFT);
+
     if (XpandShield2::pressed(XpandShield2::B_BUTTON)) {
       fillCircle(69, 43, 2, XpandShield2::WHITE);
-      Mouse.move(0, 0, -1);
+      mouse.press(MOUSE_RIGHT);
     }
-    if (XpandShield2::pressed(XpandShield2::C_BUTTON))
+    else
+      mouse.release(MOUSE_RIGHT);
+
+    if (XpandShield2::pressed(XpandShield2::C_BUTTON)) {
       fillCircle(77, 43, 2, XpandShield2::WHITE);
+      mouse.press(MOUSE_MIDDLE);
+    }
+
+    else
+      mouse.release(MOUSE_MIDDLE);
 
     if (XpandShield2::pressed(XpandShield2::X_BUTTON))
       fillCircle(85, 43, 2, XpandShield2::WHITE);
@@ -233,9 +254,9 @@ sti3_max = sti3;
       fillCircle(101, 43, 2, XpandShield2::WHITE);
 
 
-    if (XpandShield2::justPressed(XpandShield2::Z_BUTTON))
+    if (XpandShield2::justPressed(XpandShield2::START_BUTTON))
       repeat = !repeat;
-    if (XpandShield2::justPressed(XpandShield2::Y_BUTTON))
+    if (XpandShield2::justPressed(XpandShield2::SELECT_BUTTON))
       scramble = !scramble;
 
 
@@ -251,30 +272,19 @@ sti3_max = sti3;
     if (XpandShield2::pressed(XpandShield2::START_BUTTON))
       fillCircle(109, 43, 2, XpandShield2::WHITE);
 
-    if (!repeat) {
-      if (XpandShield2::pressed(XpandShield2::START_BUTTON))
-        Mouse.press(MOUSE_LEFT);
-      else
-        Mouse.release(MOUSE_LEFT);
-    }
-    else { //repeat
+    if (repeat) { //repeat
       XpandShield2::drawRect(59, 58, 5, 5, XpandShield2::WHITE);
       if (XpandShield2::justPressed(XpandShield2::START_BUTTON))
         repeatL = !repeatL;
-    }
-    if (XpandShield2::pressed(XpandShield2::SELECT_BUTTON)) {
+    } else
+      repeatL = false;
+    if (XpandShield2::pressed(XpandShield2::SELECT_BUTTON))
       fillCircle(117, 43, 2, XpandShield2::WHITE);
-      Mouse.press(MOUSE_RIGHT);
-    }
-    else
-      Mouse.release(MOUSE_RIGHT);
 
-    if (XpandShield2::pressed(XpandShield2::MENU_BUTTON)) {
+
+    if (XpandShield2::pressed(XpandShield2::MENU_BUTTON))
       fillCircle(61, 51, 2, XpandShield2::WHITE);
-      Mouse.press(MOUSE_MIDDLE);
-    }
-    else
-      Mouse.release(MOUSE_MIDDLE);
+
 
     if (repeat) {
       if (repeatL) {
@@ -282,14 +292,14 @@ sti3_max = sti3;
         if (repeatR) {
           repeatR = false;
           XpandShield2::fillRect(108, 58, 3, 3, XpandShield2::WHITE);
-          Mouse.press(MOUSE_LEFT);
+          mouse.press(MOUSE_LEFT);
         }
         else {
           repeatR = true;
-          Mouse.release(MOUSE_LEFT);
+          mouse.release(MOUSE_LEFT);
         }
-      } else
-        Mouse.release(MOUSE_LEFT);
+      } else if (mouse.isPressed(MOUSE_LEFT))
+        mouse.release(MOUSE_LEFT);
     }
     XpandShield2::drawCircle(69, 51, 2, XpandShield2::WHITE);
     XpandShield2::drawCircle(77, 51, 2, XpandShield2::WHITE);
@@ -313,7 +323,7 @@ sti3_max = sti3;
     if (XpandShield2::pressed(XpandShield2::C2_BUTTON))
       fillCircle(93, 51, 2, XpandShield2::WHITE);
 
-    if (XpandShield2::pressed(XpandShield2::STK_S_BUTTON)){
+    if (XpandShield2::pressed(XpandShield2::STK_S_BUTTON)) {
       fillCircle(101, 51, 2, XpandShield2::WHITE);
     }
 
@@ -348,8 +358,8 @@ sti3_max = sti3;
       XpandShield2::drawRect(26, 50, 5, 3, XpandShield2::WHITE);
       //++stkX;
     }
-    XpandShield2::drawVLine(8 + 16+(STK20 >> 1), 5, 32, XpandShield2::WHITE);
-    XpandShield2::drawHLine(9, 4 + 16+(STK00 >> 1), 32, XpandShield2::WHITE);
+    XpandShield2::drawVLine(8 + 16 + (STK20 >> 1), 5, 32, XpandShield2::WHITE);
+    XpandShield2::drawHLine(9, 4 + 16 + (STK00 >> 1), 32, XpandShield2::WHITE);
 
     XpandShield2::fillRect(58, 10, 32 + STK10, 4, XpandShield2::WHITE);
 
@@ -361,38 +371,26 @@ sti3_max = sti3;
     XpandShield2::display();
 
 
-/*
-    if (dirX < 0)
-      Mouse.move(-2, 0, 0);
 
-    if (dirY < 0)
-      Mouse.move(0, -2, 0);
-
-    if (dirX > 0)
-      Mouse.move(2, 0, 0);
-
-    if (dirY > 0)
-      Mouse.move(0, 2, 0);
-*/
-
-Mouse.move(STK20>>1,STK00 >> 1,0);
+    mouse.move(STK20 >> 1, STK00 >> 1);
 
     if (scramble) {
       stallFrame = !stallFrame;
       if (stallFrame) {
-        
+
         if (moveFrame == 3)
-          Mouse.move((sti4>>5), 0, 0);
+          mouse.move((sti4 >> 5), 0);
         if (moveFrame == 2)
-          Mouse.move(0, (sti4>>5), 0);
+          mouse.move(0, (sti4 >> 5));
         if (moveFrame == 1)
-          Mouse.move(-(sti4>>5), 0, 0);
+          mouse.move(-(sti4 >> 5), 0);
         if (moveFrame == 0)
-          Mouse.move(0, -(sti4>>5), 0);
-          moveFrame++;
+          mouse.move(0, -(sti4 >> 5));
+        moveFrame++;
         if (moveFrame > 3)
           moveFrame = 0;
       }
     }
+    mouse.update();
   }
 }
