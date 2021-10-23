@@ -19,6 +19,6 @@ The autoclicker and scrambler is synced. It will click once every corner.
 
 planned feature:
 scrolling via the other ThumbPointer
-a menu to save ThumbPointer (as well as SuperSlide) Calibration info on EEPROM
+some sort of menu to show device configs (and option to save Calibration info on EEPROM)
 support multiple button autoclick
 other functions such as button hold
