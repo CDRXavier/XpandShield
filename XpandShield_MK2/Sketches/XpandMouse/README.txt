@@ -6,7 +6,9 @@ When the input screen light up, the mouse will be active and the mouse will, ini
 
 After you calibrate the ThumbPointer, you can use the left joystick to navigate the mouse. The further you tilt the stick, the faster the mouse will move in that direction.
 
-Left, right and middle mouse buttons are A, B and C (bottom row), while scroll is A and X (leftmost buttons on the right group). Or, button 1 and button 4.
+Left, right and middle mouse buttons are A, B and C (bottom row on the right).
+
+DPad is scroll. Horizontal scrolling however is currently ... sketchy, as the proper HID descriptor is very difficult to find.
 
 button 8 (or SELECT) is scrambler toggle. You will notice a square light up and your mouse begin to move in a small square. This is adjustable via the left slide.
 button 7 (or START) is autoclicker toggle.  You will see another square light up and a separate empty circle.
