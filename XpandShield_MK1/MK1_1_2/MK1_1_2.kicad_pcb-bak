@@ -3,7 +3,7 @@
   (general
     (thickness 1.6)
     (drawings 51)
-    (tracks 683)
+    (tracks 682)
     (zones 0)
     (modules 0)
     (nets 1)
@@ -186,7 +186,6 @@
   (segment (start 52.07 69.85) (end 52.07 80.01) (width 0.381) (layer F.Cu) (net 0))
   (segment (start 49.53 67.31) (end 49.53 80.01) (width 0.381) (layer F.Cu) (net 0) (tstamp 5FC35249))
   (segment (start 27.94 71.12) (end 26.67 72.39) (width 0.381) (layer B.Cu) (net 0))
-  (segment (start 49.53 80.01) (end 49.53 68.58) (width 0.381) (layer F.Cu) (net 0) (tstamp 5FC36604))
   (via (at 49.53 105.41) (size 1.778) (drill 1.016) (layers F.Cu B.Cu) (net 0))
   (via (at 46.99 105.41) (size 1.778) (drill 1.016) (layers F.Cu B.Cu) (net 0))
   (via (at 44.45 105.41) (size 1.778) (drill 1.016) (layers F.Cu B.Cu) (net 0))

@@ -1,11 +1,34 @@
 #include <XpandShield2.h>
 #include "joystick.h"
+
 int16_t sti0;
+int16_t sti0_min;
+int16_t sti0_mid;
+int16_t sti0_max;
 int16_t sti1;
+int16_t sti1_min;
+int16_t sti1_mid;
+int16_t sti1_max;
 int16_t sti2;
+int16_t sti2_min;
+int16_t sti2_mid;
+int16_t sti2_max;
 int16_t sti3;
+int16_t sti3_min;
+int16_t sti3_mid;
+int16_t sti3_max;
+
+
 int16_t sti4;
 int16_t sti5;
+
+//need to cast to 32 bit to preserve 10 bit precision
+#define STK00 ((sti0>sti0_mid)? (((sti0-sti0_mid)<<5) / (sti0_max-sti0_mid)) : (((sti0-sti0_mid)<<5) / (sti0_mid-sti0_min)))
+#define STK10 ((sti1>sti1_mid)? (((sti1-sti1_mid)<<5) / (sti1_max-sti1_mid)) : (((sti1-sti1_mid)<<5) / (sti1_mid-sti1_min)))
+#define STK20 ((sti2>sti2_mid)? (((sti2-sti2_mid)<<5) / (sti2_max-sti2_mid)) : (((sti2-sti2_mid)<<5) / (sti2_mid-sti2_min)))
+#define STK30 ((sti3>sti3_mid)? (((sti3-sti3_mid)<<5) / (sti3_max-sti3_mid)) : (((sti3-sti3_mid)<<5) / (sti3_mid-sti3_min)))
+
+
 
 Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID, JOYSTICK_TYPE_GAMEPAD,
                    14, 2,                  // Button Count, Hat Switch Count
@@ -52,21 +75,35 @@ void fillCircle
 }
 
 
+void centerAxis
+(void)
+{
+  sti0_mid = analogRead(A0);
+  sti1_mid = analogRead(A1);
+  sti2_mid = analogRead(A2);
+  sti3_mid = analogRead(A3);
+  sti4 = analogRead(A4);
+  sti5 = analogRead(A5);
+  sti0_min = sti0_mid;
+  sti0_max = sti0_mid;
+  sti1_min = sti1_mid;
+  sti1_max = sti1_mid;
+  sti2_min = sti2_mid;
+  sti2_max = sti2_mid;
+  sti3_min = sti3_mid;
+  sti3_max = sti3_mid;
 
+}
 
-
-void setup() {
+void setup
+(void)
+{
   // put your setup code here, to run once:
   XpandShield2::Startup();
   XpandShield2::setFrameDiff(100);
   Joystick.begin(false);
-  sti0 = 0;
-  sti1 = 0;
-  sti2 = 0;
-  sti3 = 0;
-  sti4 = 0;
-  sti5 = 0;
 
+  centerAxis();
 }
 
 void loop() {
@@ -78,6 +115,25 @@ void loop() {
     sti3 = analogRead(A3);
     sti4 = analogRead(A4);
     sti5 = analogRead(A5);
+
+    if (sti0 < sti0_min)
+      sti0_min = sti0;
+    if (sti1 < sti1_min)
+      sti1_min = sti1;
+    if (sti2 < sti2_min)
+      sti2_min = sti2;
+    if (sti3 < sti3_min)
+      sti3_min = sti3;
+
+    if (sti0 > sti0_max)
+      sti0_max = sti0;
+    if (sti1 > sti1_max)
+      sti1_max = sti1;
+    if (sti2 > sti2_max)
+      sti2_max = sti2;
+    if (sti3 > sti3_max)
+      sti3_max = sti3;
+
 
     XpandShield2::pollButtons();
 
@@ -118,25 +174,26 @@ void loop() {
       }
       if (dirY < 0) {
         if (dirX > 0)
-          Joystick.setHatSwitch(0, 45);
+          Joystick.setHatSwitch(0, 1);
         else if (dirX < 0)
-          Joystick.setHatSwitch(0, 315);
+          Joystick.setHatSwitch(0, 7);
         else
           Joystick.setHatSwitch(0, 0);
       }
       else if (dirY > 0) {
         if (dirX > 0)
-          Joystick.setHatSwitch(0, 135);
+          Joystick.setHatSwitch(0, 3);
         else if (dirX < 0)
-          Joystick.setHatSwitch(0, 225);
+          Joystick.setHatSwitch(0, 5);
         else
-          Joystick.setHatSwitch(0, 180);
+          Joystick.setHatSwitch(0, 4);
       }
       else if (dirX > 0)
-        Joystick.setHatSwitch(0, 90);
+        Joystick.setHatSwitch(0, 2);
       else if (dirX < 0)
-        Joystick.setHatSwitch(0, 270);
-
+        Joystick.setHatSwitch(0, 6);
+else
+Joystick.setHatSwitch(0,-1);
     }
 
 
@@ -252,19 +309,17 @@ void loop() {
 
     {
       int8_t sho = 0;
-      if (XpandShield2::pressed(XpandShield2::L1_BUTTON)) {
-        XpandShield2::fillRect(58, 1, 32, 6, XpandShield2::WHITE);
+      if (XpandShield2::pressed(XpandShield2::L1_BUTTON))
         ++sho;
-      }
-      if (XpandShield2::pressed(XpandShield2::R1_BUTTON)) {
-        XpandShield2::fillRect(91, 1, 32, 6, XpandShield2::WHITE);
+      if (XpandShield2::pressed(XpandShield2::R1_BUTTON))
         --sho;
-      }
-      if (sho == 0)
+      if (sho == 0) {
         Joystick.setZAxis(512);
-      if (sho == 1)
+        XpandShield2::fillRect(58, 1, 32, 6, XpandShield2::WHITE);
+      } if (sho == 1) {
         Joystick.setZAxis(1024);
-      if (sho == -1)
+        XpandShield2::fillRect(58, 1, 63, 6, XpandShield2::WHITE);
+      } if (sho == -1)
         Joystick.setZAxis(0);
     }
 
@@ -296,67 +351,68 @@ void loop() {
       }
 
 
-if (stkY < 0) {
+      if (stkY < 0) {
         if (stkX > 0)
-          Joystick.setHatSwitch(1, 45);
+          Joystick.setHatSwitch(1, 1);
         else if (stkX < 0)
-          Joystick.setHatSwitch(1, 315);
+          Joystick.setHatSwitch(1, 7);
         else
           Joystick.setHatSwitch(1, 0);
       }
       else if (stkY > 0) {
         if (stkX > 0)
-          Joystick.setHatSwitch(1, 135);
-        else if (stkY < 0)
-          Joystick.setHatSwitch(1, 225);
+          Joystick.setHatSwitch(1, 3);
+        else if (stkX < 0)
+          Joystick.setHatSwitch(1, 5);
         else
-          Joystick.setHatSwitch(1, 180);
+          Joystick.setHatSwitch(1, 4);
       }
       else if (stkX > 0)
-        Joystick.setHatSwitch(1, 90);
+        Joystick.setHatSwitch(1, 2);
       else if (stkX < 0)
-        Joystick.setHatSwitch(1, 270);
+        Joystick.setHatSwitch(1, 6);
+else
+Joystick.setHatSwitch(1,-1);
 
 
 
-      
     }
 
     //Joystick.setRxAxisRange(0, 360);
-    
+
     //XpandShield2::setCursor(13, 6);
     //XpandShield2::printNum(sti0, XpandShield2::WHITE);
     //XpandShield2::setCursor(13, 23);
     //XpandShield2::printNum(sti1, XpandShield2::WHITE);
 
 
-    XpandShield2::drawVLine(8 + (sti2 >> 5), 5, 32, XpandShield2::WHITE);
-    XpandShield2::drawHLine(9, 4 + (sti0 >> 5), 32, XpandShield2::WHITE);
+    XpandShield2::drawVLine(8 + 16 + (STK20 >> 1), 5, 32, XpandShield2::WHITE);
+    XpandShield2::drawHLine(9, 4 + 16 + (STK00 >> 1), 32, XpandShield2::WHITE);
 
-Joystick.setXAxis(sti2);
-    Joystick.setYAxis(sti0);
+    Joystick.setXAxis((32 + STK20) << 4);
+    Joystick.setYAxis((32 + STK00) << 4);
 
     //if ((32 - (sti1 >> 4)) > 0)
-      XpandShield2::fillRect(58, 10, 64-(sti1 >> 4), 4, XpandShield2::WHITE);
+    XpandShield2::fillRect(58, 10, 32 - STK10, 4, XpandShield2::WHITE);
     //else
-      //XpandShield2::fillRect(122 - (sti1 >> 4), 9, (sti1 >> 4) - 32, 6, XpandShield2::WHITE);
+    //XpandShield2::fillRect(122 - (sti1 >> 4), 9, (sti1 >> 4) - 32, 6, XpandShield2::WHITE);
 
 
-XpandShield2::fillRect(58, 19, 64-(sti3 >> 4), 4, XpandShield2::WHITE);
-    
-    Joystick.setRxAxis(1024-sti1);
-    Joystick.setRyAxis(1024-sti3);
+    XpandShield2::fillRect(58, 19, 32 - STK30, 4, XpandShield2::WHITE);
+
+    Joystick.setRxAxis((32 - STK10) << 4);
+    Joystick.setRyAxis((32 - STK30) << 4);
 
 
     //if ((sti3 >> 4) - 32 > 0)
-      
+
     //else
-      //XpandShield2::fillRect(58 + (sti3 >> 4), 17, 32 - (sti3 >> 4), 6, XpandShield2::WHITE);
+    //XpandShield2::fillRect(58 + (sti3 >> 4), 17, 32 - (sti3 >> 4), 6, XpandShield2::WHITE);
     XpandShield2::fillRect(58, 26, (sti4 >> 4), 4, XpandShield2::WHITE);
     XpandShield2::fillRect(58, 34, (sti5 >> 4), 4, XpandShield2::WHITE);
 
     Joystick.setRzAxis(sti5);
-Joystick.setThrottle(sti4);
+    Joystick.setThrottle(sti4);
 
 
 
@@ -364,7 +420,7 @@ Joystick.setThrottle(sti4);
 
 
 
-    
+
     //XpandShield2::setCursor(40, 16);
     //XpandShield2::printNum(sti2, XpandShield2::WHITE);
     //XpandShield2::setCursor(40, 33);
@@ -378,7 +434,7 @@ Joystick.setThrottle(sti4);
 
 
     XpandShield2::display();
-Joystick.sendState();
+    Joystick.sendState();
 
 
 

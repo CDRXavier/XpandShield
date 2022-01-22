@@ -23,10 +23,10 @@
 #if defined(_USING_DYNAMIC_HID)
 
 #define JOYSTICK_REPORT_ID_INDEX 7
-#define JOYSTICK_AXIS_MINIMUM -32767
-#define JOYSTICK_AXIS_MAXIMUM 32767
-#define JOYSTICK_SIMULATOR_MINIMUM -32767
-#define JOYSTICK_SIMULATOR_MAXIMUM 32767
+#define JOYSTICK_AXIS_MINIMUM 0
+#define JOYSTICK_AXIS_MAXIMUM 1024
+#define JOYSTICK_SIMULATOR_MINIMUM 0
+#define JOYSTICK_SIMULATOR_MAXIMUM 1024
 
 #define JOYSTICK_INCLUDE_X_AXIS  B00000001
 #define JOYSTICK_INCLUDE_Y_AXIS  B00000010
@@ -295,13 +295,13 @@ Joystick_::Joystick_(
 
 		// LOGICAL_MINIMUM (-32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x16;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x80;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
 		// LOGICAL_MAXIMUM (+32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x26;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0xFF;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x7F;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
 		// REPORT_SIZE (16)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
@@ -368,13 +368,13 @@ Joystick_::Joystick_(
 		
 		// LOGICAL_MINIMUM (-32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x16;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x80;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
 		// LOGICAL_MAXIMUM (+32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x26;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0xFF;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x7F;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
 
 		// REPORT_SIZE (16)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
@@ -466,19 +466,19 @@ Joystick_::Joystick_(
 	_brake = 0;
 	_steering = 0;
 	for (int index = 0; index < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; index++)
-	{
+	
 		_hatSwitchValues[index] = JOYSTICK_HATSWITCH_RELEASE;
-	}
+	
     for (int index = 0; index < _buttonValuesArraySize; index++)
-    {
+    
         _buttonValues[index] = 0;
-    }
+    
 }
 
 void Joystick_::begin(bool initAutoSendState)
 {
 	_autoSendState = initAutoSendState;
-	sendState();
+	//sendState();
 }
 
 void Joystick_::end()
@@ -487,34 +487,17 @@ void Joystick_::end()
 
 void Joystick_::setButton(uint8_t button, uint8_t value)
 {
+  if (button >= _buttonCount) return;
+  int index = button / 8;
+    int bit = button % 8;
 	if (value == 0)
-	{
-		releaseButton(button);
-	}
+	
+		bitClear(_buttonValues[index], bit);
+	
 	else
-	{
-		pressButton(button);
-	}
-}
-void Joystick_::pressButton(uint8_t button)
-{
-    if (button >= _buttonCount) return;
-
-    int index = button / 8;
-    int bit = button % 8;
-
-	bitSet(_buttonValues[index], bit);
-	if (_autoSendState) sendState();
-}
-void Joystick_::releaseButton(uint8_t button)
-{
-    if (button >= _buttonCount) return;
-
-    int index = button / 8;
-    int bit = button % 8;
-
-    bitClear(_buttonValues[index], bit);
-	if (_autoSendState) sendState();
+	
+		bitSet(_buttonValues[index], bit);
+	
 }
 
 void Joystick_::setXAxis(int16_t value)
@@ -583,32 +566,32 @@ void Joystick_::setHatSwitch(int8_t hatSwitchIndex, int16_t value)
 	if (_autoSendState) sendState();
 }
 
-int Joystick_::buildAndSet16BitValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, int16_t actualMinimum, int16_t actualMaximum, uint8_t dataLocation[]) 
+int Joystick_::buildAxisValue(int16_t value, uint8_t dataLocation[]) 
 {
-	int16_t convertedValue;
+	//int16_t convertedValue;
 	uint8_t highByte;
 	uint8_t lowByte;
-	int16_t realMinimum = min(valueMinimum, valueMaximum);
-	int16_t realMaximum = max(valueMinimum, valueMaximum);
+	//int16_t realMinimum = min(valueMinimum, valueMaximum);
+	//int16_t realMaximum = max(valueMinimum, valueMaximum);
 
-	if (includeValue == false) return 0;
+	//if (includeValue == false) return 0;
 
-	if (value < realMinimum) {
-		value = realMinimum;
-	}
-	if (value > realMaximum) {
-		value = realMaximum;
-	}
+	//if (value < realMinimum) 
+	//	value = realMinimum;
+	
+	//if (value > realMaximum) 
+	//	value = realMaximum;
+	
 
-	if (valueMinimum > valueMaximum) {
+	//if (valueMinimum > valueMaximum) 
 		// Values go from a larger number to a smaller number (e.g. 1024 to 0)
-		value = realMaximum - value + realMinimum;
-	}
+	//	value = realMaximum - value + realMinimum;
+	
 
-	convertedValue = map(value, realMinimum, realMaximum, actualMinimum, actualMaximum);
+	//convertedValue = map(value, realMinimum, realMaximum, actualMinimum, actualMaximum);
 
-	highByte = (uint8_t)(convertedValue >> 8);
-	lowByte = (uint8_t)(convertedValue & 0x00FF);
+	highByte = (uint8_t)(value >> 8);
+	lowByte = (uint8_t)(value & 0x00FF);
 	
 	dataLocation[0] = lowByte;
 	dataLocation[1] = highByte;
@@ -616,15 +599,15 @@ int Joystick_::buildAndSet16BitValue(bool includeValue, int16_t value, int16_t v
 	return 2;
 }
 
-int Joystick_::buildAndSetAxisValue(bool includeAxis, int16_t axisValue, int16_t axisMinimum, int16_t axisMaximum, uint8_t dataLocation[]) 
-{
-	return buildAndSet16BitValue(includeAxis, axisValue, axisMinimum, axisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM, dataLocation);
-}
+//int Joystick_::buildAndSetAxisValue(bool includeAxis, int16_t axisValue, int16_t axisMinimum, int16_t axisMaximum, uint8_t dataLocation[]) 
+//{
+//	return buildAndSet16BitValue(includeAxis, axisValue, axisMinimum, axisMaximum, JOYSTICK_AXIS_MINIMUM, JOYSTICK_AXIS_MAXIMUM, dataLocation);
+//}
 
-int Joystick_::buildAndSetSimulationValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, uint8_t dataLocation[]) 
-{
-	return buildAndSet16BitValue(includeValue, value, valueMinimum, valueMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM, dataLocation);
-}
+//int Joystick_::buildAndSetSimulationValue(bool includeValue, int16_t value, int16_t valueMinimum, int16_t valueMaximum, uint8_t dataLocation[]) 
+//{
+//	return buildAndSet16BitValue(includeValue, value, valueMinimum, valueMaximum, JOYSTICK_SIMULATOR_MINIMUM, JOYSTICK_SIMULATOR_MAXIMUM, dataLocation);
+//}
 
 void Joystick_::sendState()
 {
@@ -641,38 +624,49 @@ void Joystick_::sendState()
 	if (_hatSwitchCount > 0) {
 		
 		// Calculate hat-switch values
-		uint8_t convertedHatSwitch[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
-		for (int hatSwitchIndex = 0; hatSwitchIndex < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; hatSwitchIndex++)
-		{
-			if (_hatSwitchValues[hatSwitchIndex] < 0)
-			{
-				convertedHatSwitch[hatSwitchIndex] = 8;
-			}
-			else
-			{
-				convertedHatSwitch[hatSwitchIndex] = (_hatSwitchValues[hatSwitchIndex] % 360) / 45;
-			}			
-		}
+		//uint8_t convertedHatSwitch[JOYSTICK_HATSWITCH_COUNT_MAXIMUM];
+		//for (int hatSwitchIndex = 0; hatSwitchIndex < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; hatSwitchIndex++)
+		//{
+			//if (_hatSwitchValues[hatSwitchIndex] < 0)
+			//{
+			//	convertedHatSwitch[hatSwitchIndex] = 8;
+			//}
+			//else
+			//{
+			//	convertedHatSwitch[hatSwitchIndex] = (_hatSwitchValues[hatSwitchIndex] % 360) / 45;
+			//}			
+		//}
 
 		// Pack hat-switch states into a single byte
-		data[index++] = (convertedHatSwitch[1] << 4) | (B00001111 & convertedHatSwitch[0]);
+		data[index++] = (_hatSwitchValues[1] << 4) | (B00001111 & _hatSwitchValues[0]);
 	
 	} // Hat Switches
 
 	// Set Axis Values
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_X_AXIS, _xAxis, _xAxisMinimum, _xAxisMaximum, &(data[index]));
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_Y_AXIS, _yAxis, _yAxisMinimum, _yAxisMaximum, &(data[index]));
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_Z_AXIS, _zAxis, _zAxisMinimum, _zAxisMaximum, &(data[index]));
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RX_AXIS, _xAxisRotation, _rxAxisMinimum, _rxAxisMaximum, &(data[index]));
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RY_AXIS, _yAxisRotation, _ryAxisMinimum, _ryAxisMaximum, &(data[index]));
-	index += buildAndSetAxisValue(_includeAxisFlags & JOYSTICK_INCLUDE_RZ_AXIS, _zAxisRotation, _rzAxisMinimum, _rzAxisMaximum, &(data[index]));
+  if (_includeAxisFlags & JOYSTICK_INCLUDE_X_AXIS)
+	index += buildAxisValue(_xAxis, &(data[index]));
+ if (_includeAxisFlags & JOYSTICK_INCLUDE_Y_AXIS)
+	index += buildAxisValue(_yAxis, &(data[index]));
+ if (_includeAxisFlags & JOYSTICK_INCLUDE_Z_AXIS)
+	index += buildAxisValue(_zAxis, &(data[index]));
+ if (_includeAxisFlags & JOYSTICK_INCLUDE_RX_AXIS)
+	index += buildAxisValue(_xAxisRotation, &(data[index]));
+ if (_includeAxisFlags & JOYSTICK_INCLUDE_RY_AXIS)
+	index += buildAxisValue(_yAxisRotation, &(data[index]));
+ if (_includeAxisFlags & JOYSTICK_INCLUDE_RZ_AXIS)
+	index += buildAxisValue(_zAxisRotation, &(data[index]));
 	
 	// Set Simulation Values
-	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_RUDDER, _rudder, _rudderMinimum, _rudderMaximum, &(data[index]));
-	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_THROTTLE, _throttle, _throttleMinimum, _throttleMaximum, &(data[index]));
-	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_ACCELERATOR, _accelerator, _acceleratorMinimum, _acceleratorMaximum, &(data[index]));
-	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_BRAKE, _brake, _brakeMinimum, _brakeMaximum, &(data[index]));
-	index += buildAndSetSimulationValue(_includeSimulatorFlags & JOYSTICK_INCLUDE_STEERING, _steering, _steeringMinimum, _steeringMaximum, &(data[index]));
+  if (_includeSimulatorFlags & JOYSTICK_INCLUDE_RUDDER)
+	index += buildAxisValue(_rudder, &(data[index]));
+ if (_includeSimulatorFlags & JOYSTICK_INCLUDE_THROTTLE)
+	index += buildAxisValue(_throttle, &(data[index]));
+ if (_includeSimulatorFlags & JOYSTICK_INCLUDE_ACCELERATOR)
+	index += buildAxisValue(_accelerator, &(data[index]));
+ if(_includeSimulatorFlags & JOYSTICK_INCLUDE_BRAKE)
+	index += buildAxisValue(_brake, &(data[index]));
+ if (_includeSimulatorFlags & JOYSTICK_INCLUDE_STEERING)
+	index += buildAxisValue(_steering, &(data[index]));
 
 	DynamicHID().SendReport(_hidReportId, data, _hidReportSize);
 }
