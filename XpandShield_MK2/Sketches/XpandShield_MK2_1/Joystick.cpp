@@ -300,8 +300,8 @@ Joystick_::Joystick_(
 
 		// LOGICAL_MAXIMUM (+32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x26;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
 
 		// REPORT_SIZE (16)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
@@ -373,8 +373,8 @@ Joystick_::Joystick_(
 
 		// LOGICAL_MAXIMUM (+32767)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x26;
-		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x00;
+		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x04;
 
 		// REPORT_SIZE (16)
 		tempHidReportDescriptor[hidReportDescriptorSize++] = 0x75;
