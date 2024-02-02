@@ -4,10 +4,36 @@ Expansion shield featuring multiple high-speed analog (and digital) inputs and a
 
 With 6 analog input via two joysticks and two linear actuator, the potential is almost endless. Plus a on-board high speed display and quite a few extra buttons, this will be all you need to make advanced projects requiring analog inputs. USB gamepad/mouse/keyboard/controller? You bet. Programmable robot control? Sounds very decent. Or just another fancy Arduboy? Well, that works too, if you want.
 
+
+
+
 ______
 To Do
 
-Write up everything
+the "os" on the chip
+	- centering of the sticks (X implemented)
+	- deadzones (not done yet)
+	- menu for recalibration (EEPROM storage)
+	- autoclicker/remap (low prio)
+	- possible accelerometer (low prio)
+The USB
+	- rewrite the joystick library
+	- remove the USB bootloader protocol
+	- "snoop" the uh Xinput Xbox compatiable controller and implement the HID table
+	- figure out how to do the 6-dof input device (low prio)
+	- possible bluetooth (low prio)
+The PCB and enclosure
+	- PCb work closely together with enclosure
+	- relative ergonomic, and simple
+	- replaceable sticks if possible
+
+
+
+
+
+
+
+
 
 Features:
 Two ThumbPointer™ (with center push)
