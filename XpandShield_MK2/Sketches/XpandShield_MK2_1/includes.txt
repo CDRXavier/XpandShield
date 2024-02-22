@@ -1,0 +1,28 @@
+file include tree
+MK2.1_sketch
+	XpandShield2.h
+		SPI.h
+	joystick.h
+		dynamicHID.h
+All of the following by default is somewhere around here
+C:\Program Files (x86)\Arduino\hardware\
+Arduino.h
+	stdlib.h
+	stdbool.h
+	string.h
+	math.h
+	avr/pgmspace.h
+	avr/io.h
+	avr/interrupt.h
+	binary.h
+	"WCharacter.h"
+	"WString.h"
+	"HardwareSerial.h"
+	"USBAPI.h"
+	pins_arduino.h
+USBAPI.h is in C:\Program Files (x86)\Arduino\hardware\arduino\
+USBCore.h
+	USBAPI.h
+		USBDesc.h
+		USBCore.h
+
