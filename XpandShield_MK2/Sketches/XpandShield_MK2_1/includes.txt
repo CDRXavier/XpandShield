@@ -4,6 +4,8 @@ MK2.1_sketch
 		SPI.h
 	joystick.h
 		dynamicHID.h
+			stdint.h
+			arduino.h
 All of the following by default is somewhere around here
 C:\Program Files (x86)\Arduino\hardware\
 Arduino.h
@@ -12,7 +14,34 @@ Arduino.h
 	string.h
 	math.h
 	avr/pgmspace.h
+		avr.io
+	avr/interrupt.h
+	binary.h
+	pins_arduino.h
+
+	wcharacter.h
+	wstring.h
+	hardwareserial.h
+	USBAPI.h
+	
+USBAPI.h (uses stuff from usbcore)
+	inttypes
+	pgmspace
+	eeprom
+	interrupt
+	util/delay
+
+	usbdesc.h (useless lel)
+	usbcore.h (important base)
+
+#include <inttypes.h>
+	stdint.h
+#include <stddef.h>
 	avr/io.h
+		include <avr/sfr_defs.h>
+		#include <avr/portpins.h>
+		#include <avr/common.h>
+		#include <avr/version.h>
 	avr/interrupt.h
 	binary.h
 	"WCharacter.h"
@@ -24,5 +53,33 @@ USBAPI.h is in C:\Program Files (x86)\Arduino\hardware\arduino\
 USBCore.h
 	USBAPI.h
 		USBDesc.h
-		USBCore.h
+		USBCore.h <-- !!!important!!! <--
+#include <inttypes.h>
+#include <avr/pgmspace.h>
+#include <avr/eeprom.h>
+#include <avr/interrupt.h>
+#include <util/delay.h>
 
+
+Arduino "core" loop
+
+int main(void)
+{
+	init();
+	initVariant();
+
+#if defined(USBCON)
+	USBDevice.attach();
+#endif
+	
+	setup();
+	for (;;) {
+		loop();
+		if (serialEventRun) serialEventRun();
+	}
+	return 0;
+}
+
+
+things to look at:
+https://forum.arduino.cc/t/programming-without-bootloader/127250/26
