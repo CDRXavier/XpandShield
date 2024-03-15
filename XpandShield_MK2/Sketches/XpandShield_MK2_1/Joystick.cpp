@@ -44,7 +44,7 @@
 Joystick_::Joystick_(
 	uint8_t hidReportId,
 	uint8_t joystickType,
-    uint8_t buttonCount,
+	uint8_t buttonCount,
 	uint8_t hatSwitchCount,
 	bool includeXAxis,
 	bool includeYAxis,
@@ -58,11 +58,11 @@ Joystick_::Joystick_(
 	bool includeBrake,
 	bool includeSteering)
 {
-    // Set the USB HID Report ID
-    _hidReportId = hidReportId;
+	// Set the USB HID Report ID
+	_hidReportId = hidReportId;
 
-    // Save Joystick Settings
-    _buttonCount = buttonCount;
+	// Save Joystick Settings
+	_buttonCount = buttonCount;
 	_hatSwitchCount = hatSwitchCount;
 	_includeAxisFlags = 0;
 	_includeAxisFlags |= (includeXAxis ? JOYSTICK_INCLUDE_X_AXIS : 0);
@@ -78,7 +78,7 @@ Joystick_::Joystick_(
 	_includeSimulatorFlags |= (includeBrake ? JOYSTICK_INCLUDE_BRAKE : 0);
 	_includeSimulatorFlags |= (includeSteering ? JOYSTICK_INCLUDE_STEERING : 0);
 	
-    // Build Joystick HID Report Description
+	// Build Joystick HID Report Description
 	
 	// Button Calculations
 	uint8_t buttonsInLastByte = _buttonCount % 8;
@@ -89,38 +89,36 @@ Joystick_::Joystick_(
 	}
 	
 	// Axis Calculations
-	uint8_t axisCount = (includeXAxis == true)
-		+  (includeYAxis == true)
-		+  (includeZAxis == true)
-		+  (includeRxAxis == true)
-		+  (includeRyAxis == true)
-		+  (includeRzAxis == true);
+	uint8_t axisCount=0;
+	for (uint8_t axisFlagTemp=_includeAxisFlags; axisFlagTemp; axisFlagTemp=axisFlagTemp >> 1)
+		axisCount+=(axisFlagTemp & 1);
 		
-	uint8_t simulationCount = (includeRudder == true)
-		+ (includeThrottle == true)
-		+ (includeAccelerator == true)
-		+ (includeBrake == true)
-		+ (includeSteering == true); 
-		
-    uint8_t tempHidReportDescriptor[150];
-    int hidReportDescriptorSize = 0;
-
-    // USAGE_PAGE (Generic Desktop)
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
-
-    // USAGE (Joystick - 0x04; Gamepad - 0x05; Multi-axis Controller - 0x08)
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
-    tempHidReportDescriptor[hidReportDescriptorSize++] = joystickType;
-
-    // COLLECTION (Application)
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0xa1;
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
-
-    // REPORT_ID (Default: 3)
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0x85;
-    tempHidReportDescriptor[hidReportDescriptorSize++] = _hidReportId;
+	uint8_t simulationCount=0;
+	for (uint8_t simFlagTemp=_includeSimulatorFlags; simFlagTemp; simFlagTemp=simFlagTemp >> 1)
+		simulationCount+=(simFlagTemp & 1);
 	
+	//Size 8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2+(_hatSwitchCount > 0)*27+(_hatSwitchCount > 1)*13+(axisCount > 0)*17+axisCount*2
+	int hidReportDescriptorSize = 0, actualDescriptorSize=8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2+(_hatSwitchCount > 0)*27+(_hatSwitchCount > 1)*13+(axisCount > 0)*17+axisCount*2;
+	uint8_t *tempHidReportDescriptor = new uint8_t[actualDescriptorSize];
+
+	// USAGE_PAGE (Generic Desktop)
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0x05;
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+	// USAGE (Joystick - 0x04; Gamepad - 0x05; Multi-axis Controller - 0x08)
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0x09;
+	tempHidReportDescriptor[hidReportDescriptorSize++] = joystickType;
+
+	// COLLECTION (Application)
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0xa1;
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0x01;
+
+	// REPORT_ID (Default: 3)
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0x85;
+	tempHidReportDescriptor[hidReportDescriptorSize++] = _hidReportId;
+
+	//Size 8
+
 	if (_buttonCount > 0) {
 
 		// USAGE_PAGE (Button)
@@ -181,6 +179,8 @@ Joystick_::Joystick_(
 
 	} // Buttons
 
+	//Size 8+(buttonCount > 0 ? 20+(buttonPaddingBits > 0 ? 6 : 0) : 0)
+
 	if ((axisCount > 0) || (_hatSwitchCount > 0)) {
 	
 		// USAGE_PAGE (Generic Desktop)
@@ -189,6 +189,8 @@ Joystick_::Joystick_(
 		
 	}
 
+	//Size 8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2
+	
 	if (_hatSwitchCount > 0) {
 
 		// USAGE (Hat Switch)
@@ -287,6 +289,8 @@ Joystick_::Joystick_(
 
 	} // Hat Switches
 
+	//Size 8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2+(_hatSwitchCount > 0)*27+(_hatSwitchCount > 1)*13
+	
 	if (axisCount > 0) {
 	
 		// USAGE (Pointer)
@@ -360,6 +364,7 @@ Joystick_::Joystick_(
 		
 	} // X, Y, Z, Rx, Ry, and Rz Axis	
 	
+	//Size 8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2+(_hatSwitchCount > 0)*27+(_hatSwitchCount > 1)*13+(axisCount > 0)*17+(axisCount*2)
 	if (simulationCount > 0) {
 	
 		// USAGE_PAGE (Simulation Controls)
@@ -427,18 +432,16 @@ Joystick_::Joystick_(
 	
 	} // Simulation Controls
 
-    // END_COLLECTION
-    tempHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
-
-	// Create a copy of the HID Report Descriptor template that is just the right size
-	uint8_t *customHidReportDescriptor = new uint8_t[hidReportDescriptorSize];
-	memcpy(customHidReportDescriptor, tempHidReportDescriptor, hidReportDescriptorSize);
+	//Size 8+(buttonCount > 0)*20+(buttonCount > 0 && buttonPaddingBits > 0)*6+(axisCount > 0 || _hatSwitchCount > 0)*2+(_hatSwitchCount > 0)*27+(_hatSwitchCount > 1)*13+(axisCount > 0)*17+axisCount*2
+    
+	// END_COLLECTION
+	tempHidReportDescriptor[hidReportDescriptorSize++] = 0xc0;
 	
 	// Register HID Report Description
-	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(customHidReportDescriptor, hidReportDescriptorSize, false);
+	DynamicHIDSubDescriptor *node = new DynamicHIDSubDescriptor(tempHidReportDescriptor, hidReportDescriptorSize, false);
 	DynamicHID().AppendDescriptor(node);
 	
-    // Setup Joystick State
+	// Setup Joystick State
 	if (buttonCount > 0) {
 		_buttonValuesArraySize = _buttonCount / 8;
 		if ((_buttonCount % 8) > 0) {
@@ -466,13 +469,10 @@ Joystick_::Joystick_(
 	_brake = 0;
 	_steering = 0;
 	for (int index = 0; index < JOYSTICK_HATSWITCH_COUNT_MAXIMUM; index++)
-	
 		_hatSwitchValues[index] = JOYSTICK_HATSWITCH_RELEASE;
-	
-    for (int index = 0; index < _buttonValuesArraySize; index++)
-    
-        _buttonValues[index] = 0;
-    
+
+	for (int index = 0; index < _buttonValuesArraySize; index++)
+		_buttonValues[index] = 0;
 }
 
 void Joystick_::begin(bool initAutoSendState)
