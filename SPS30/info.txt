@@ -1,0 +1,1 @@
+Xavier and I are making an autonomous filtration/ventilation system for the Mercer lab using an SPS30, Arduino Leonardo, and custom PCB. The coding is the work of Xavier, PCB is the work of Max.
